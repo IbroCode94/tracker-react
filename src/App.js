@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Tasks  from "./components/Tasks";
 
 function App() {
-  const [tasks, setasks] = useState([
+  const [tasks, setTasks] = useState([
     {
       id: 1,
       text: "Doctors Appointment",
@@ -23,10 +23,24 @@ function App() {
       reminder: false,
     },
   ]);
+    //Delete task
+    const deleteTask = (id) => {
+      setTasks(tasks.filter((task) => task.id !== id))
+    }
+
+    //Toggle Reminder
+    const  toggleReminder = (id) => {
+      setTasks(tasks.map((task) => task.id == id ? {...task, reminder: !task.reminder} : task))
+
+    }
+
+
   return (
-    <div className="App">
+    <div className="container">
       <Header />
-      <Tasks tasks={tasks}/>
+     {tasks.length> 0 ? (<Tasks tasks={tasks} onDelete=
+       {deleteTask} onToggle = {toggleReminder}/>
+        ):( "No Task to Show")}
     </div>
   );
 }
